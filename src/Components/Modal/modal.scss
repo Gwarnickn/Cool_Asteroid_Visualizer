@@ -1,0 +1,65 @@
+@use "@/styles/variables" as *;
+@use '@/styles/breakpoints' as *;
+
+
+.modal-background{
+    background-color: unset;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .modal{
+        display: flex;
+        flex-direction: column;
+        border-radius: 16px;
+        backdrop-filter: blur(15px)brightness(0.4);
+        max-height: 80vh;
+        .modal-header{
+            width: 100%;
+            display: flex;
+            flex-direction: row-reverse;
+            z-index: 2;
+            .close-btn{
+                position: absolute;
+                border-style: solid;
+                border-width: 35px;
+                width: 0px;
+                height: 0px;
+                transform: translate(1px, -1px);
+                border-color: var(--red-op50) var(--red-op50) transparent transparent;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 0px 16px 0px 0px;
+                svg{
+                    transform: translate(16px, -15px);
+                    position: absolute;
+                    width: 33.3px;
+                    height: 33.3px;
+                    path{
+                        stroke: var(--g-white-op50);
+                    }
+                }
+                &:hover{
+                    border-color: var(--red-op70) var(--red-op70) transparent transparent;
+                    svg{
+                        path{
+                            stroke: var(--g-white);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@include breakpoint(mobile_large) {
+    .modal{
+        width: calc(100% - 64px);
+    }
+}

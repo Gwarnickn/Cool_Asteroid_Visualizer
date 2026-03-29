@@ -1,0 +1,11 @@
+@use "@/styles/variables" as *;
+@use '@/styles/breakpoints' as *;
+
+.button{
+    all: unset;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+}

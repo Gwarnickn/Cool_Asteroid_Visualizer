@@ -2,25 +2,13 @@ body{
     
     --g-black: #000000;
     --g-black-op90: rgba(0,0,0,0.9);
-    --g-black-op70: rgba(0,0,0,0.7);
-    --g-black-op50: rgba(0,0,0,0.5);
-    --g-black-op40: rgba(0,0,0,0.4);
-    --g-black-op30: rgba(0,0,0,0.3);
-    --g-black-op20: rgba(0,0,0,0.2);
-    --g-black-op10: rgba(0,0,0,0.1);
+
 
     --g-white: #ffffff;
     --g-white-op50: rgba(255,255,255,0.5);
     --g-white-op30: rgba(255,255,255,0.3);
-
-    --g-light-gray: rgb(228,229,228);
-
-    --g-primary: rgba(112, 0, 14, 1);
-    --g-primary-op60: rgba(112, 0, 14,0.6);
-    --g-primary-op30: rgba(112, 0, 14,0.3);
-    --g-primary-op10: rgba(112, 0, 14,0.1);
     
 
-    --g-red: #DD342E;
-    --g-red-light: #F86363;
+    --g-gradient-start: rgba(255,255,255,0.10);
+    --g-gradient-end: rgba(255,255,255,0.05);
 }

@@ -1,0 +1,7 @@
+@use "@/styles/variables" as *;
+@use '@/styles/breakpoints' as *;
+
+.galaxy{
+    background-color: var(--g-black);
+    grid-area: 1/1/1/1;
+}

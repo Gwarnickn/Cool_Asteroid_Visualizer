@@ -8,29 +8,14 @@ $font-size-4: 16px;
 $font-size-5: 14px;
 $font-size-6: 12px;
 
-$primary-font: "Inter", sans-serif;
+$primary-font: "JetBrainsMono", sans-serif;
 
 body,body.light-theme{
-    --black: var(--g-black);
-    --black-op90: var(--g-black-op90);
-    --black-op70: var(--g-black-op70);
-    --black-op50: var(--g-black-op50);
-    --black-op40: var(--g-black-op40);
-    --black-op30: var(--g-black-op30);
-    --black-op20: var(--g-black-op20);
-    --black-op10: var(--g-black-op10);
-
-    --white: var(--g-white);
-    --white-op50: var(--g-white-op50);
+    --gradient-start: var(--g-gradient-start);
+    --gradient-end: var(--g-gradient-end);
     --white-op30: var(--g-white-op30);
 
-    --light-gray: var(--g-light-gray);
+    --white: var(--g-white);
+    --black: var(--g-black);
 
-    --primary: var(--g-primary);
-    --primary-op60: var(--g-primary-op60);
-    --primary-op30: var(--g-primary-op30);
-    --primary-op10: var(--g-primary-op10);
-
-    --red: var(--g-red);
-    --red-light: var(--g-red-light);
 }

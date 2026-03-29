@@ -1,0 +1,121 @@
+@use "@/styles/variables" as *;
+@use '@/styles/breakpoints' as *;
+
+.dashboard{
+    width: 100vw;
+    height: 100vh;
+    grid-area: 1/1/1/1;
+    z-index: 2;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    *{
+        pointer-events: all;
+    }
+    .TEST{
+        position: absolute;
+        left: 50%;
+        top: 10%;
+        transform: translate(-50%,-50%);
+    }
+    .expanded{
+        transform: translate(100%,0px);
+    }
+    .right-section{
+        width: calc(38.2% - 16px);
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        padding: 0px 0px 0px 16px;
+        transition: all 0.5s;
+        .expand-block{
+            position: absolute;
+            left: 0%;
+            transform: translate(-57px, 5px);
+            width: 50px;
+            height: 50px;
+            font-size: $font-size-2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+        }
+        .section-header{
+            margin-top: 12px;
+            font-size: $font-size-1;
+        }
+        .section-results{
+            font-size: $font-size-4;
+        }
+        .asteroids-container{
+            height: calc(100% - 100px);
+            overflow-y: auto;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            .asteroid{
+                grid-template-columns: 50px auto 100px;
+                grid-template-rows: 30px 25px 25px;
+                margin-right: 16px;
+                display: grid;
+                border-top: 1px solid var(--white-op30);
+                border-left: 1px solid var(--white-op30);
+                border-right: 1px solid var(--white-op30);
+                border-radius: 8px;
+                margin-bottom: 12px;
+                .asteroid-icon{
+                    grid-area: 1/1/3/1;
+                    width: 55px;
+                    height: 55px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    svg{
+                        width: 30px;
+                        height: 30px;
+                        path{
+                            fill: var(--white)
+                        }
+                        g{
+                            stroke: var(--white);
+                            path{
+                                fill: none !important;
+                            }
+                        }
+                    }
+                }
+                .asteroid-name{
+                    grid-area: 1/2/2/4;
+                    display: flex;
+                    align-items: center;
+                    font-size: $font-size-4;
+                    padding-left: 8px;
+                    white-space: nowrap;
+                }
+                .asteroid-badges{
+                    grid-area: 2/2/3/4;
+                    padding-left: 8px;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: start;
+                    gap: 4px;
+                    .badge{
+                        height: min-content;
+                        width: max-content;
+                        padding: 0px 4px;
+                        border-radius: 4px;
+                        font-size: $font-size-6;
+                    }
+                }
+                .asteroid-button{
+                    border-radius: 0px 0px 8px 8px;
+                    grid-area: 3/1/4/4;
+                }
+            }
+            // & > *:not(:last-child){
+            //     border-bottom: 1px solid var(--white-op30);
+            // }
+        }
+    }
+}
