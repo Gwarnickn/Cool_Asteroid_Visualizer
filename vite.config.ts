@@ -10,6 +10,15 @@ export default defineConfig({
     svgrPlugin(),
     //analyzer(),
   ],
+  server: {
+    proxy: {
+      '/api/sbdb': {
+        target: 'https://ssd-api.jpl.nasa.gov/sbdb.api',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/sbdb/, '')
+      }
+    }
+  },
   build:{
     outDir: 'dist'
   },

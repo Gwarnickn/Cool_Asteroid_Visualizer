@@ -1,0 +1,34 @@
+@use "@/styles/variables" as *;
+@use '@/styles/breakpoints' as *;
+
+.checkbox-wrapper{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    input{
+        all: unset;
+        min-height: 24px;
+        min-width: 24px;
+        border-radius: 8px;
+        margin: 0px 2px 0px 8px;
+        font-size: $font-size-4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        border: 1px solid var(--white-op30);
+        &:hover{
+            border: 1px solid var(--white-op50);
+        }
+        &::before{
+            content: '✓';
+            color: var(--white-op30);
+        }
+    }
+    .checked{
+        &::before{
+            content: '✓';
+            color: var(--white) !important;
+        }
+    } 
+}

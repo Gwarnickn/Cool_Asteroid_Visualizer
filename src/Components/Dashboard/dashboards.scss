@@ -45,7 +45,49 @@
             margin-top: 12px;
             font-size: $font-size-1;
         }
+        .filter-container{
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .section-filters{
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            width: 100%;
+            .speed-filter{
+                color: var(--white-op30);
+                display: flex;
+                gap: 4px;
+                align-items: center;
+                input[type=number]{
+                    width: 60px;
+                }
+            }
+            .spacer{
+                width: calc(100% - 16px);
+                display: flex;
+                align-items: center;
+                font-size: $font-size-5;
+                height: 0px;
+                margin: 16px 0px;
+                .spacer-text{
+                    transform: translate(0px, -2px);
+                    color: var(--white);
+                    padding: 2px 8px;
+                    border-radius: 8px;
+                }
+                .line{
+                    transform: translate(0px,-2.5px);
+                    flex: 1;
+                    height: 1px;
+                    background-color: var(--white-op30);
+                }
+            }
+        }
         .section-results{
+            margin: 8px 16px 8px 0px;
+            text-align: end;
             font-size: $font-size-4;
         }
         .asteroids-container{
@@ -75,10 +117,10 @@
                         width: 30px;
                         height: 30px;
                         path{
-                            fill: var(--white)
+                            fill: var(--white-op30)
                         }
                         g{
-                            stroke: var(--white);
+                            stroke: var(--white-op30);
                             path{
                                 fill: none !important;
                             }
@@ -88,25 +130,16 @@
                 .asteroid-name{
                     grid-area: 1/2/2/4;
                     display: flex;
-                    align-items: center;
+                    align-items: end;
                     font-size: $font-size-4;
                     padding-left: 8px;
                     white-space: nowrap;
+                    
                 }
                 .asteroid-badges{
                     grid-area: 2/2/3/4;
-                    padding-left: 8px;
-                    display: flex;
-                    flex-direction: row;
-                    align-items: start;
-                    gap: 4px;
-                    .badge{
-                        height: min-content;
-                        width: max-content;
-                        padding: 0px 4px;
-                        border-radius: 4px;
-                        font-size: $font-size-6;
-                    }
+                    justify-content: start !important;
+                    margin-top: unset !important;
                 }
                 .asteroid-button{
                     border-radius: 0px 0px 8px 8px;
@@ -118,4 +151,69 @@
             // }
         }
     }
+}
+
+.badge{
+    height: min-content;
+    width: max-content;
+    padding: 0px 4px;
+    border-radius: 4px;
+    font-size: $font-size-6;
+}
+
+.asteroid-badges{
+    padding-left: 8px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    margin-top: 2px;
+}
+
+.asteroid-details{
+    padding: 16px;
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    .asteroid-preview{
+        width: 100%;
+        height: 150px;
+        position: absolute !important;
+        left: 50%;
+        transform: translate(-50%,calc(-100% + 0px));
+    }
+    .details-header{
+        padding: 0px 32px;
+        font-size: $font-size-3;
+        margin: 16px 0px 8px 0px;
+        text-align: center;
+    }
+    li{
+        margin-left: 32px;
+    }
+    .details-price{
+        margin-top: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        .details-separate{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            &:last-child{
+                padding-top: 8px;
+                border-top: 1px solid var(--white-op30);
+            }
+            span:last-child{
+                padding-left: 16px;
+            }
+            .money{
+                padding-left: unset !important;
+                color: yellowgreen;
+            }
+        }
+    }
+
 }

@@ -4,66 +4,33 @@ import type { AsteroidType } from "../../Contexts/Asteroids";
 import "./dashboards.scss";
 import { AxiosError } from "axios";
 import AsteroidsContext, { AsteroidSizes } from "../../Contexts/Asteroids";
-import AsteroidBig from '../../assets/svg/asteroid-big.svg?react';
-import AsteroidMedium from '../../assets/svg/asteroid-medium.svg?react';
-import AsteroidSmall from '../../assets/svg/asteroid-small.svg?react';
-import ArrowLeft from '../../assets/svg/arrow-left.svg?react';
-import Button from "../Button/Button";
-import Modal from "../Modal/Modal";
-type AsteroidProps = {
-    asteroid: AsteroidType
-} 
-
-const AsteroidIcon: Record<AsteroidSizes, React.ReactNode> = {
-    [AsteroidSizes.SMALL]: <AsteroidSmall/>,
-    [AsteroidSizes.MEDIUM]: <AsteroidMedium/>,
-    [AsteroidSizes.BIG]: <AsteroidBig/>,
-}
-
-const BadgeColor: Record<string, object> = {
-    "orange": {"--white-op30":"rgba(255, 198, 26,0.3)","--gradient-start":"rgba(255, 198, 26,0.20)","--gradient-end":"rgba(255, 198, 26,0.5)"},
-    "blue": {"--white-op30":"rgba(0,0,255,0.3)","--gradient-start":"rgba(0,0,255,0.20)","--gradient-end":"rgba(0,0,255,0.5)"},
-    "red": {"--white-op30":"rgba(255,0,0,0.3)","--gradient-start":"rgba(255,0,0,0.20)","--gradient-end":"rgba(255,0,0,0.5)"}
-}
-
-
-const Asteroid = ({asteroid}: AsteroidProps) => {
-    const [isModalOpen, setModalOpen] = useState(false);
-    return (
-        <div className="asteroid">
-            <div className="asteroid-icon">{AsteroidIcon[asteroid.size]}</div>
-            <div className="asteroid-name">{asteroid.name}</div>
-            <div className="asteroid-badges">
-                {asteroid.size == AsteroidSizes.MEDIUM && <div className="badge blur-background" style={BadgeColor["red"]  as CSSProperties}>
-                    {asteroid.average_diameter > 140 ? (asteroid.average_diameter > 1000 ? (asteroid.average_diameter > 2000 ? "Mass Extinction" : "Civilization Ender") : "Continent Killer") : "City Killer"}
-                </div>}
-                {asteroid.hazardous && <div className="badge blur-background" style={BadgeColor["orange"] as CSSProperties}>
-                    Hazardous
-                </div>}
-                {asteroid.sentry && <div className="badge blur-background" style={BadgeColor["blue"]  as CSSProperties}>
-                    Sentry
-                </div>}
-            </div>
-            <Button className="asteroid-button" onClick={(e) => {setModalOpen(true);console.log("XD");e.preventDefault();e.stopPropagation();}}>Details</Button>
-            <Modal isOpen={isModalOpen} handleClose={() => {setModalOpen(false)}}>TEST</Modal>
-        </div>
-    )
-}
-
+import Asteroid from "./Asteroid";
+import { Checkbox } from "../Checkbox/Checkbox";
+import { BadgeColor } from "./Asteroid";
 
 const Dashboard = () => {
     const [expanded, setExpanded] = useState(false);
     const canChangeExpand = useRef(true);
     const {asteroids, setAsteroids} = useContext(AsteroidsContext);
+    const [filter, setFilter] = useState<{hazardous: boolean, sentry: boolean, speed: boolean, minSpeed: number, maxSpeed: number, small: boolean, medium: boolean, big: boolean}>({
+        hazardous: false,
+        sentry: false,
+        speed: false,
+        minSpeed: 0,
+        maxSpeed: 0,
+        small: false,
+        medium: false,
+        big: false,
+    });
+    const [tak, setTak] = useState(false);
     const handleClick = async () => {
         try{
             const response = await api.getExample();
-            console.log(response);
             const combined: AsteroidType[] = [];
             Object.keys(response.near_earth_objects).forEach((key) => {
                 response.near_earth_objects[key].map((asteroid: any) => {
-                    const average_diameter = (asteroid.estimated_diameter.kilometers.estimated_diameter_min + asteroid.estimated_diameter.kilometers.estimated_diameter_max) / 2 + 49.5;
-                    const size = average_diameter > 50 ? (average_diameter > 1000 ? AsteroidSizes.BIG : AsteroidSizes.MEDIUM) : AsteroidSizes.SMALL;
+                    const average_diameter = (asteroid.estimated_diameter.kilometers.estimated_diameter_min + asteroid.estimated_diameter.kilometers.estimated_diameter_max) / 2;
+                    const size = average_diameter > 0.05 ? (average_diameter > 1 ? AsteroidSizes.BIG : AsteroidSizes.MEDIUM) : AsteroidSizes.SMALL;
                     combined.push({
                         id: asteroid.id,
                         name: asteroid.name,
@@ -71,10 +38,12 @@ const Dashboard = () => {
                         sentry: asteroid.is_sentry_object,
                         absolute_magnitude_h: asteroid.absolute_magnitude_h,
                         size,
+                        volume: (4/3*Math.PI*Math.pow((average_diameter * 1000),3)),
                         average_diameter,
                         velocity: asteroid.close_approach_data[0].relative_velocity.kilometers_per_second,
                         date: asteroid.close_approach_data[0].close_approach_date,
                         visible: true,
+                        details: null,
                         estimated_diameter:{
                             min: asteroid.estimated_diameter.kilometers.estimated_diameter_min,
                             max: asteroid.estimated_diameter.kilometers.estimated_diameter_max,
@@ -82,7 +51,6 @@ const Dashboard = () => {
                     })
                 })
             });
-            console.log(combined);
             setAsteroids(combined);
         }catch(err){
             const error = err as AxiosError;
@@ -100,6 +68,18 @@ const Dashboard = () => {
         }
     }
 
+    const filters = (asteroid: AsteroidType) => {
+        let matchsize = 0;
+        matchsize += filter.small ? asteroid.size === AsteroidSizes.SMALL ? 1 : 0 : 0;
+        matchsize += filter.medium ? asteroid.size === AsteroidSizes.MEDIUM ? 1 : 0 : 0;
+        matchsize += filter.big ? asteroid.size === AsteroidSizes.BIG ? 1 : 0 : 0;
+
+        return (filter.hazardous ? asteroid.hazardous : true) && 
+        (filter.sentry ? asteroid.sentry : true) && 
+        (filter.speed ? (asteroid.velocity > filter.minSpeed && asteroid.velocity < filter.maxSpeed) : true) &&
+        ((filter.big === filter.medium && filter.medium === filter.small) || matchsize === 1)
+    }
+
 
     return (
         <div className="dashboard">
@@ -109,9 +89,48 @@ const Dashboard = () => {
                     {expanded ? "<<" : ">>"}
                 </div>
                 <div className="section-header">Asteroids</div>
-                <div className="section-results">results: {asteroids.length}</div>
+                <div className="section-filters">
+                    <div className="spacer">
+                        <div className="spacer-text blur-background">Type</div>
+                        <div className="line"/>
+                    </div>
+                    <div className="filter-container">
+                        <Checkbox value={filter.hazardous == true} onClick={() => {setFilter({...filter,hazardous: !filter.hazardous})}}>
+                            <div className="badge blur-background" style={BadgeColor["orange"] as CSSProperties}>Hazardous</div>
+                        </Checkbox>
+                        <Checkbox value={filter.sentry == true} onClick={() => {setFilter({...filter,sentry: !filter.sentry})}}>
+                            <div className="badge blur-background" style={BadgeColor["blue"]  as CSSProperties}>Sentry</div>
+                        </Checkbox>
+                    </div>
+                    <div className="spacer">
+                        <div className="spacer-text blur-background">Speed</div>
+                        <div className="line"/>
+                    </div>
+                    <div className="speed-filter">
+                        <input placeholder="min" type="number" min={0} max={1000} value={filter.minSpeed} onChange={(e) => {setFilter({...filter, minSpeed: parseFloat(e.target.value)})}}/> 
+                        - 
+                        <input placeholder="max" type="number" min={0} max={1000} value={filter.maxSpeed} onChange={(e) => {setFilter({...filter, maxSpeed: parseFloat(e.target.value)})}}/> [km/s]
+                        <Checkbox value={filter.speed == true} onClick={() => {setFilter({...filter,speed: !filter.speed})}}/>
+                    </div>
+                    <div className="spacer">
+                        <div className="spacer-text blur-background">Size</div>
+                        <div className="line"/>
+                    </div>
+                    <div className="filter-container">
+                        <Checkbox value={filter.small} onClick={() => {setFilter({...filter, small: !filter.small})}}>
+                            Small
+                        </Checkbox>
+                        <Checkbox value={filter.medium} onClick={() => {setFilter({...filter, medium: !filter.medium})}}>
+                            Medium
+                        </Checkbox>
+                        <Checkbox value={filter.big} onClick={() => {setFilter({...filter, big: !filter.big})}}>
+                            Big
+                        </Checkbox>
+                    </div>
+                </div>
+                <div className="section-results">results: {asteroids.filter((asteroid) => filters(asteroid)).length}</div>
                 <div className="asteroids-container">
-                    {asteroids.map((asteroid) => (
+                    {asteroids.filter((asteroid) => filters(asteroid)).map((asteroid) => (
                         <Asteroid asteroid={asteroid}/>
                     ))}
                 </div>

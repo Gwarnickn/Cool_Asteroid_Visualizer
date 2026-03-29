@@ -6,6 +6,10 @@ export enum AsteroidSizes {
     BIG = "BIG"
 }
 
+type AsteroidDetails = {
+    type: string
+}
+
 export type AsteroidType = {
     id: string,
     name: string,
@@ -15,12 +19,14 @@ export type AsteroidType = {
     size: AsteroidSizes,
     date: string,
     velocity: number,
+    volume: number,
     average_diameter: number,
     absolute_magnitude_h: number,
     estimated_diameter: {
         min: number,
         max: number,
     }
+    details: AsteroidDetails | null;
 } 
 
 
