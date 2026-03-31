@@ -44,3 +44,22 @@ input[type=number]{
     border: 1px solid var(--white) !important; 
   }
 }
+
+.react-select-container{
+  .react-select__control{
+    border: 1px solid var(--white-op30);
+    background-color: transparent;
+    .react-select__value-container{
+      .react-select__single-value{
+        color: var(--white) !important;
+      }
+    }
+    .react-select__input-container{
+      
+    }
+  }
+  .react-select__menu{
+    border: 1px solid var(--white-op30);
+    background-color: transparent;
+  }
+}

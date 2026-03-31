@@ -7,6 +7,14 @@ import AsteroidsContext, { AsteroidSizes } from "../../Contexts/Asteroids";
 import Asteroid from "./Asteroid";
 import { Checkbox } from "../Checkbox/Checkbox";
 import { BadgeColor } from "./Asteroid";
+import Select from 'react-select'
+
+
+const options = [
+  { value: 'chocolate', label: 'Chocolate' },
+  { value: 'strawberry', label: 'Strawberry' },
+  { value: 'vanilla', label: 'Vanilla' },
+];
 
 const Dashboard = () => {
     const [expanded, setExpanded] = useState(false);
@@ -22,7 +30,6 @@ const Dashboard = () => {
         medium: false,
         big: false,
     });
-    const [tak, setTak] = useState(false);
     const handleClick = async () => {
         try{
             const response = await api.getExample();
@@ -106,7 +113,7 @@ const Dashboard = () => {
                         <div className="spacer-text blur-background">Speed</div>
                         <div className="line"/>
                     </div>
-                    <div className="speed-filter">
+                    <div className={`speed-filter ${filter.speed && "active"}`}>
                         <input placeholder="min" type="number" min={0} max={1000} value={filter.minSpeed} onChange={(e) => {setFilter({...filter, minSpeed: parseFloat(e.target.value)})}}/> 
                         - 
                         <input placeholder="max" type="number" min={0} max={1000} value={filter.maxSpeed} onChange={(e) => {setFilter({...filter, maxSpeed: parseFloat(e.target.value)})}}/> [km/s]
@@ -129,6 +136,9 @@ const Dashboard = () => {
                     </div>
                 </div>
                 <div className="section-results">results: {asteroids.filter((asteroid) => filters(asteroid)).length}</div>
+                <div className="sorting-container">
+                    <Select options={options} className="react-select-container"  classNamePrefix="react-select" defaultInputValue={options[0].label}/>
+                </div>
                 <div className="asteroids-container">
                     {asteroids.filter((asteroid) => filters(asteroid)).map((asteroid) => (
                         <Asteroid asteroid={asteroid}/>

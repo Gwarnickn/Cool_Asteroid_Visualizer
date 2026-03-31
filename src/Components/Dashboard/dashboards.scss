@@ -55,6 +55,11 @@
             flex-direction: column;
             gap: 4px;
             width: 100%;
+            .active{
+                input[type=number]{
+                    color: var(--white);
+                }
+            }
             .speed-filter{
                 color: var(--white-op30);
                 display: flex;
@@ -84,6 +89,9 @@
                     background-color: var(--white-op30);
                 }
             }
+        }
+        .sorting-container{
+            margin: 8px 0px;
         }
         .section-results{
             margin: 8px 16px 8px 0px;
