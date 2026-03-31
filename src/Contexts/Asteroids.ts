@@ -22,6 +22,11 @@ export type AsteroidType = {
     volume: number,
     average_diameter: number,
     absolute_magnitude_h: number,
+    position?:{
+        x: number,
+        y: number,
+        z: number,
+    }
     estimated_diameter: {
         min: number,
         max: number,

@@ -9,11 +9,19 @@ import { Checkbox } from "../Checkbox/Checkbox";
 import { BadgeColor } from "./Asteroid";
 import Select from 'react-select'
 import Button from "../Button/Button";
+import Ascending from '../../assets/svg/sorter-ascending.svg?react';
+import Descending from '../../assets/svg/sorter-descending.svg?react';
 
-const options = [
+type SortOption = {
+    value: keyof AsteroidType | 'NONE'; 
+    label: string;
+};
+
+const options: SortOption[] = [
   { value: 'NONE', label: 'Choose' },
-  { value: 'AVERAGE_DIAMETER', label: 'Diameter' },
-  { value: 'CLOSESEST_APPROACH', label: 'Approach' },
+  { value: 'average_diameter', label: 'Diameter' },
+  { value: 'velocity', label: 'Velocity' },
+  { value: 'absolute_magnitude_h', label: 'Magnitude' },
 ];
 
 const Dashboard = () => {
@@ -30,7 +38,7 @@ const Dashboard = () => {
         medium: false,
         big: false,
     });
-    const [sorter, setSorter] = useState<{value: string, label: string}>(options[0]);
+    const [sorter, setSorter] = useState<{option: {value: string, label: string}, isDescending: boolean}>({option: options[0], isDescending: false});
     const handleClick = async () => {
         try{
             const response = await api.getExample();
@@ -50,7 +58,7 @@ const Dashboard = () => {
                         average_diameter,
                         velocity: asteroid.close_approach_data[0].relative_velocity.kilometers_per_second,
                         date: asteroid.close_approach_data[0].close_approach_date,
-                        visible: true,
+                        visible: false,
                         details: null,
                         estimated_diameter:{
                             min: asteroid.estimated_diameter.kilometers.estimated_diameter_min,
@@ -138,12 +146,18 @@ const Dashboard = () => {
                 </div>
                 <div className="section-results">results: {asteroids.filter((asteroid) => filters(asteroid)).length}</div>
                 <div className="sorting-container">
-                    <Select options={options} className={`react-select-container ${sorter.value !== 'NONE' && "react-select-full"}`}  classNamePrefix="react-select" value={sorter} onChange={(e) => {setSorter(e ? {label: e?.label, value: e?.value} : options[0])}}/>
-                    <Button className={`${sorter.value !== options[0].value && "blur-background"}`}>sort</Button>                
+                    <Select options={options} className={`react-select-container ${sorter.option.value !== 'NONE' && "react-select-full"}`}  classNamePrefix="react-select" value={sorter.option} onChange={(e) => {setSorter({...sorter, option: e ? {label: e?.label, value: e?.value} : options[0]})}}/>
+                    <Button className={`${sorter.option.value !== options[0].value && "blur-background"}`} onClick={() => {setSorter({...sorter, isDescending: !sorter.isDescending})}}>{sorter.isDescending ? <Descending/> : <Ascending/>}</Button>                
                 </div>
                 <div className="asteroids-container">
-                    {asteroids.filter((asteroid) => filters(asteroid)).map((asteroid) => (
-                        <Asteroid asteroid={asteroid}/>
+                    {asteroids.filter((asteroid) => filters(asteroid)).sort((a: AsteroidType,b: AsteroidType) => {
+                        if(sorter.option.value === "NONE" ) return 0
+                        const sortBy = sorter.option.value as keyof AsteroidType;
+                        const aValue = a[sortBy] as number;
+                        const bValue = b[sortBy] as number;
+                        return sorter.isDescending ? bValue - aValue : aValue - bValue;
+                    }).map((asteroid, key) => (
+                        <Asteroid asteroid={asteroid} key={key}/>
                     ))}
                 </div>
             </div>

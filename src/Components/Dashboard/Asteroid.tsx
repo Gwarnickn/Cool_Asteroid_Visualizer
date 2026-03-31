@@ -9,6 +9,8 @@ import { AsteroidSizes, type AsteroidType } from '../../Contexts/Asteroids';
 import { useContext, useState, type CSSProperties } from "react";
 import AsteroidsContext from '../../Contexts/Asteroids';
 import AsteroidPreview from './AsteroidPreview';
+import Visible from '../../assets/svg/eye.svg?react';
+import NotVisible from '../../assets/svg/eye-off.svg?react';
 
 type AsteroidProps = {
     asteroid: AsteroidType
@@ -67,7 +69,7 @@ const Asteroid = ({asteroid}: AsteroidProps) => {
                 const response = await api.getDetails(asteroid.id);
                 let type = "u";
                 if(response.phys_par){
-                    const param = response.phys_par.find((param: any) => param.name == "spec_B" || param.name == "spec_T");
+                    const param = response.phys_par.find((param: {name: string}) => param.name == "spec_B" || param.name == "spec_T");
                     if(param){
                         type = param.value;
                     }
@@ -79,7 +81,6 @@ const Asteroid = ({asteroid}: AsteroidProps) => {
                     }
                 });
                 setAsteroids(tempAsteroids);
-                console.log(asteroids);
             }catch(err){
                 const error = err as AxiosError;
                 console.error(error);
@@ -88,12 +89,28 @@ const Asteroid = ({asteroid}: AsteroidProps) => {
         setModalOpen(true)
     }
 
+    const handleVisibleClick =  () => {
+        if(!asteroid.position){
+            //
+        }
+            const tempAsteroids = asteroids.map((x) => {
+                if(x.id == asteroid.id){
+                    return {...x, visible: !x.visible}
+                }
+                return x
+            });
+            setAsteroids(tempAsteroids);
+            console.log(asteroids);
+    }
+
+
     return (
-        <div className="asteroid" key={asteroid.id}>
+        <div className="asteroid" key={asteroid.id + asteroid.visible && "visible"}>
             <div className="asteroid-icon">{AsteroidIcon[asteroid.size]}</div>
             <div className="asteroid-name">{asteroid.name}</div>
             {badge}
-            <Button className="asteroid-button" onClick={handleDetailsClick}>Details</Button>
+            <Button className="asteroid-button blur-background" onClick={handleDetailsClick}>Details</Button>
+            <Button className="asteroid-visible" onClick={handleVisibleClick}>{asteroid.visible ? <Visible className="visible"/> : <NotVisible/>}</Button>
             <Modal isOpen={isModalOpen} handleClose={() => {setModalOpen(false)}}>
                 <div className="asteroid-details">
                     <AsteroidPreview type={asteroid.details?.type[0]}/>
@@ -104,6 +121,7 @@ const Asteroid = ({asteroid}: AsteroidProps) => {
                     {asteroid.details?.type && <>
                         <div className="details-type">type: {AsteroidDetails[asteroid.details?.type[0].toLocaleLowerCase()].name}</div>
                         <div className="details-type">velocity: {Math.round(asteroid.velocity * 100) / 100} km/s</div>
+                        <div className="details-type">magnitude: {asteroid.absolute_magnitude_h}</div>
                         <div className="details-type">volume: ~{asteroid.volume.toExponential(5)} m<sup>3</sup></div>
                         <div className="details-type">density: {AsteroidDetails[asteroid.details?.type[0].toLocaleLowerCase()].density} kg/m<sup>3</sup></div>
                         <div className="details-type">composition: {AsteroidDetails[asteroid.details?.type[0].toLocaleLowerCase()].elements.length > 0 ? AsteroidDetails[asteroid.details?.type[0].toLocaleLowerCase()].elements.map((element) => {

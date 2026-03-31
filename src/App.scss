@@ -109,7 +109,7 @@ input[type=number]{
   }
   .react-select__menu{
     border: 1px solid var(--white-op30);
-    background-color: transparent;
+    background-color: var(--black);
     .react-select__menu-list{
       
       .react-select__option{

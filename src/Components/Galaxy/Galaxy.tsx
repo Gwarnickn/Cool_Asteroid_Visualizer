@@ -3,8 +3,7 @@ import { Bloom, EffectComposer} from '@react-three/postprocessing'
 import { useRef } from "react";
 import { Mesh, TextureLoader } from "three";
 import './galaxy.scss';
-import { Stats, OrbitControls } from '@react-three/drei'
-import * as THREE from "three";
+import { OrbitControls } from '@react-three/drei'
 
 
 const AU = 149597871;
