@@ -8,12 +8,12 @@ import Asteroid from "./Asteroid";
 import { Checkbox } from "../Checkbox/Checkbox";
 import { BadgeColor } from "./Asteroid";
 import Select from 'react-select'
-
+import Button from "../Button/Button";
 
 const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' },
+  { value: 'NONE', label: 'Choose' },
+  { value: 'AVERAGE_DIAMETER', label: 'Diameter' },
+  { value: 'CLOSESEST_APPROACH', label: 'Approach' },
 ];
 
 const Dashboard = () => {
@@ -30,6 +30,7 @@ const Dashboard = () => {
         medium: false,
         big: false,
     });
+    const [sorter, setSorter] = useState<{value: string, label: string}>(options[0]);
     const handleClick = async () => {
         try{
             const response = await api.getExample();
@@ -92,9 +93,9 @@ const Dashboard = () => {
         <div className="dashboard">
             <button className="TEST" onClick={handleClick}>XD</button>
             <div className={`right-section blur-background ${expanded && "expanded"}`}>
-                <div className="expand-block blur-background" onClick={handleExpandClick}>
+                <Button className="expand-block blur-background" onClick={handleExpandClick}>
                     {expanded ? "<<" : ">>"}
-                </div>
+                </Button>
                 <div className="section-header">Asteroids</div>
                 <div className="section-filters">
                     <div className="spacer">
@@ -137,7 +138,8 @@ const Dashboard = () => {
                 </div>
                 <div className="section-results">results: {asteroids.filter((asteroid) => filters(asteroid)).length}</div>
                 <div className="sorting-container">
-                    <Select options={options} className="react-select-container"  classNamePrefix="react-select" defaultInputValue={options[0].label}/>
+                    <Select options={options} className={`react-select-container ${sorter.value !== 'NONE' && "react-select-full"}`}  classNamePrefix="react-select" value={sorter} onChange={(e) => {setSorter(e ? {label: e?.label, value: e?.value} : options[0])}}/>
+                    <Button className={`${sorter.value !== options[0].value && "blur-background"}`}>sort</Button>                
                 </div>
                 <div className="asteroids-container">
                     {asteroids.filter((asteroid) => filters(asteroid)).map((asteroid) => (

@@ -91,7 +91,16 @@
             }
         }
         .sorting-container{
-            margin: 8px 0px;
+            margin: 8px 8px 8px 0px;
+            display: flex;
+            gap: 8px;
+            .button{
+                height: calc(100% - 2px);
+                aspect-ratio: 1 / 1;
+            }
+            .not-sorting{
+                background-color: red !important;
+            }
         }
         .section-results{
             margin: 8px 16px 8px 0px;

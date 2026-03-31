@@ -7,7 +7,7 @@ type ButtonProps = React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButton
 
 const Button: FunctionComponent<ButtonProps> = ({children, className, onClick, ...props}) =>{
     return (
-        <button className={`button ${className} blur-background`} onClick={onClick} {...props}>{children}</button>
+        <button className={`button ${className}`} onClick={onClick} {...props}>{children}</button>
     );
 }
 export default Button;
