@@ -11,7 +11,8 @@ import Select from 'react-select'
 import Button from "../Button/Button";
 import Ascending from '../../assets/svg/sorter-ascending.svg?react';
 import Descending from '../../assets/svg/sorter-descending.svg?react';
-
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 type SortOption = {
     value: keyof AsteroidType | 'NONE'; 
     label: string;
@@ -26,6 +27,7 @@ const options: SortOption[] = [
 
 const Dashboard = () => {
     const [expanded, setExpanded] = useState(false);
+    const [dateRange, setDateRange] = useState<{startDate: Date, endDate: Date}>({startDate: new Date(), endDate: new Date()});
     const canChangeExpand = useRef(true);
     const {asteroids, setAsteroids} = useContext(AsteroidsContext);
     const [filter, setFilter] = useState<{hazardous: boolean, sentry: boolean, speed: boolean, minSpeed: number, maxSpeed: number, small: boolean, medium: boolean, big: boolean}>({
@@ -99,6 +101,8 @@ const Dashboard = () => {
 
     return (
         <div className="dashboard">
+            <DatePicker selected={dateRange.startDate} onChange={(date: Date | null) => {date ? setDateRange({...dateRange, startDate: date}) : null}}/>
+            <DatePicker selected={dateRange.endDate} endDate={dateRange.endDate} selectsRange startDate={dateRange.startDate} onChange={(dates: [Date | null, Date| null]) => {dates[1] ? setDateRange({...dateRange, endDate: dates[1]}) : null}}/>
             <button className="TEST" onClick={handleClick}>XD</button>
             <div className={`right-section blur-background ${expanded && "expanded"}`}>
                 <Button className="expand-block blur-background" onClick={handleExpandClick}>

@@ -9,7 +9,7 @@ function App() {
   return (
     <div className='main'>
       <AsteroidsContext.Provider value={{asteroids,setAsteroids}}>
-        <Galaxy/>
+        {/* <Galaxy/> */}
         <Dashboard/>
       </AsteroidsContext.Provider>
     </div>

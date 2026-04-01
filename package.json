@@ -17,6 +17,7 @@
     "axios": "^1.14.0",
     "env-cmd": "^11.0.0",
     "react": "^19.2.4",
+    "react-datepicker": "^9.1.0",
     "react-dom": "^19.2.4",
     "react-portal": "^4.3.0",
     "react-select": "^5.10.2",
