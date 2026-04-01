@@ -16,6 +16,11 @@ export default defineConfig({
         target: 'https://ssd-api.jpl.nasa.gov/sbdb.api',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api\/sbdb/, '')
+      },
+      '/api/horizon': {
+        target: 'https://ssd.jpl.nasa.gov/api/horizons.api',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/horizon/, '')
       }
     }
   },

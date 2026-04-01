@@ -1,4 +1,4 @@
-import { useContext, useRef, useState, type CSSProperties } from "react";
+import { useContext, useEffect, useRef, useState, type CSSProperties } from "react";
 import api from "../../api/ApiService";
 import type { AsteroidType } from "../../Contexts/Asteroids";
 import "./dashboards.scss";
@@ -86,6 +86,10 @@ const Dashboard = () => {
         }
     }
 
+    useEffect(() => {
+        console.log(asteroids);
+    })
+
     const filters = (asteroid: AsteroidType) => {
         let matchsize = 0;
         matchsize += filter.small ? asteroid.size === AsteroidSizes.SMALL ? 1 : 0 : 0;
@@ -101,8 +105,8 @@ const Dashboard = () => {
 
     return (
         <div className="dashboard">
-            <DatePicker selected={dateRange.startDate} onChange={(date: Date | null) => {date ? setDateRange({...dateRange, startDate: date}) : null}}/>
-            <DatePicker selected={dateRange.endDate} endDate={dateRange.endDate} selectsRange startDate={dateRange.startDate} onChange={(dates: [Date | null, Date| null]) => {dates[1] ? setDateRange({...dateRange, endDate: dates[1]}) : null}}/>
+            {/* <DatePicker selected={dateRange.startDate} onChange={(date: Date | null) => {date ? setDateRange({...dateRange, startDate: date}) : null}}/>
+            <DatePicker selected={dateRange.endDate} endDate={dateRange.endDate} selectsRange startDate={dateRange.startDate} onChange={(dates: [Date | null, Date| null]) => {dates[1] ? setDateRange({...dateRange, endDate: dates[1]}) : null}}/> */}
             <button className="TEST" onClick={handleClick}>XD</button>
             <div className={`right-section blur-background ${expanded && "expanded"}`}>
                 <Button className="expand-block blur-background" onClick={handleExpandClick}>

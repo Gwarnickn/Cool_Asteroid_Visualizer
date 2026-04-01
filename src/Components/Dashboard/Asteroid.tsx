@@ -89,9 +89,18 @@ const Asteroid = ({asteroid}: AsteroidProps) => {
         setModalOpen(true)
     }
 
-    const handleVisibleClick =  () => {
+    const handleVisibleClick =  async () => {
         if(!asteroid.position){
-            //
+            console.log(asteroid.id)
+            try{
+                const response = await api.getVectors(asteroid.id, asteroid.date);
+                console.log(asteroid.id)
+                const parts = response.split(/\$\$SOE|\$\$EOE/);
+                console.log(parts[1])
+            }catch(err){
+                const error = err as AxiosError;
+                console.error(error);
+            }
         }
             const tempAsteroids = asteroids.map((x) => {
                 if(x.id == asteroid.id){
