@@ -10,6 +10,12 @@ type AsteroidDetails = {
     type: string
 }
 
+export type Position = {
+    x: number,
+    y: number,
+    z: number,
+}
+
 export type AsteroidType = {
     id: string,
     name: string,
@@ -22,11 +28,9 @@ export type AsteroidType = {
     volume: number,
     average_diameter: number,
     absolute_magnitude_h: number,
-    position?:{
-        x: number,
-        y: number,
-        z: number,
-    }
+    miss_distance: number,
+    color: string,
+    position?: Position,
     estimated_diameter: {
         min: number,
         max: number,

@@ -25,6 +25,9 @@
 
 @include breakpoint(mobile_medium) {
     .dashboard{
+        .date-picker{
+            top: 20% !important;
+        }
         .right-section{
             min-width: unset !important;
             width: 100vw !important;
@@ -78,11 +81,41 @@
     *{
         pointer-events: all;
     }
-    .TEST{
+    .date-picker{
         position: absolute;
         left: 50%;
-        top: 10%;
-        transform: translate(-50%,-50%);
+        top: 7.5%;
+        width: max-content;
+        padding: 8px 0px;
+        border-radius: 8px;
+        transform: translate(-50%,0%);
+        .date-picker-top{
+            display: flex;
+            align-items: center;
+            span{
+                margin: 0px 8px;
+            }
+            .button{
+                aspect-ratio: 1/1;
+                height: 33px;
+                margin: 0px 8px;
+                svg{
+                    width: 24px;
+                    height: 24px;
+                    fill: var(--white);
+                }
+            }
+        }
+        .example-dates{
+            margin: 8px 8px 0px 8px;
+            display: grid;
+            gap: 4px;
+            .button{
+                font-size: $font-size-5;
+                width: calc(100% - 16px);
+                padding: 4px 8px;
+            }
+        }
     }
     .expanded{
         transform: translate(100%,0px);
@@ -159,7 +192,7 @@
             }
         }
         .sorting-container{
-            margin: 8px 8px 8px 0px;
+            margin: 8px 16px 8px 0px;
             display: flex;
             gap: 8px;
             .button{
@@ -209,10 +242,10 @@
                         width: 30px;
                         height: 30px;
                         path{
-                            fill: var(--white-op30)
+                            fill:rgba($color: #fff, $alpha: 0.5);
                         }
                         g{
-                            stroke: var(--white-op30);
+                            stroke: rgba($color: #fff, $alpha: 0.5);
                             path{
                                 fill: none !important;
                             }
@@ -288,10 +321,15 @@
         left: 50%;
         transform: translate(-50%,calc(-100% + 0px));
     }
+    .note{
+        font-size: $font-size-6;
+        position: absolute;
+        color: var(--white-op30)
+    }
     .details-header{
         padding: 0px 32px;
         font-size: $font-size-3;
-        margin: 16px 0px 8px 0px;
+        margin: 24px 0px 8px 0px;
         text-align: center;
     }
     li{
@@ -316,7 +354,7 @@
             }
             .money{
                 padding-left: unset !important;
-                color: yellowgreen;
+                color: var(--green);
             }
         }
     }

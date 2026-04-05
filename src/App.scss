@@ -1,10 +1,15 @@
 @use "@/styles/variables" as *;
 @use '@/styles/breakpoints' as *;
 
+
+*{
+  font-family: $primary-font;
+}
+
 body{
   padding: 0px;
   margin: 0px;
-  font-family: $primary-font;
+  
   overflow: hidden;
   background-color: black;
 }
@@ -18,7 +23,15 @@ body{
   font-weight: 100;
 }
 
-.blur-background,.react-select__menu{
+.blur-background,
+.react-select__menu,
+.react-datepicker-wrapper,
+.react-datepicker,
+.react-datepicker__header,
+.react-datepicker__day--range-start:not(.react-datepicker__day--outside-month),
+.react-datepicker__day--range-end:not(.react-datepicker__day--outside-month),
+.react-datepicker__day--in-range:not(.react-datepicker__day--outside-month),
+.react-datepicker__day:hover{
   backdrop-filter: blur(10px) !important;
   background-image: linear-gradient(140deg, var(--gradient-start) 5%, var(--gradient-end) 80%),url("noise.webp") !important;
   background-size: cover !important;
@@ -112,7 +125,6 @@ input[type=number]{
     border: 1px solid var(--white-op30);
     background-color: var(--black);
     .react-select__menu-list{
-      
       .react-select__option{
         cursor: pointer;
       }
@@ -125,3 +137,88 @@ input[type=number]{
     }
   }
 }
+
+.OP-annulus-rli-bounding-box{
+  width: 24px !important;
+  height: 24px !important;
+  .OP-annulus-indicator >.whirl {
+    position: relative !important;
+  }
+}
+
+
+.react-datepicker-wrapper {
+  border-radius: 4px;
+  width: 116px;
+  .react-datepicker__input-container {
+    input {
+      color: var(--white);
+      width: calc(100% - 20px);
+      background-color: transparent;
+      outline: unset;
+      padding: 4px 8px;
+      border: unset !important;
+      font-size: $font-size-4;
+
+      margin: 2px;
+    }
+  }
+}
+
+.react-datepicker-popper {
+  svg{
+    fill: var(--white-op50) !important;
+    color: var(--white-op50) !important;
+    stroke: unset !important;
+  }
+}
+
+.react-datepicker {
+  background-color: var(--black) !important;
+  .react-datepicker__month-container{
+    .react-datepicker__header {
+      background-color: transparent;
+      border: unset !important;
+      border-bottom: 1px solid var(--white-op30) !important;
+      .react-datepicker__current-month {
+        color: var(--white) !important;
+      }
+    }
+    .react-datepicker__day-name {
+      color: var(--white) !important;
+      font-weight: bold;
+    }
+  }
+  .react-datepicker__day {
+    background-color: transparent !important;
+    color: var(--white);
+    border: 1px solid transparent;
+    border-radius: 4px;
+    &--selected, 
+    &--keyboard-selected {
+      outline: unset !important;
+    }
+
+    &--in-selecting-range,
+    &--in-range {
+      background-color: transparent !important;
+      color: var(--white) !important;
+      &:hover{
+        background-color: transparent !important;
+      }
+    }
+
+    &--outside-month{
+      color: transparent !important;
+      pointer-events: none !important; 
+    }
+
+
+    &--disabled {
+      color: var(--white-op30);
+      &::after{
+      }
+    }
+  }
+}
+
