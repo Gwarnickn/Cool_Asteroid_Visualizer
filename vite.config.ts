@@ -8,8 +8,8 @@ export default defineConfig({
   plugins: [
     react(),
     svgrPlugin(),
-    //analyzer(),
   ],
+  base: "/cool-asteroid-visualizer",
   server: {
     proxy: {
       '/api/sbdb': {

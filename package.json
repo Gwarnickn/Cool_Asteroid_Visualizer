@@ -1,5 +1,6 @@
 {
   "name": "cool-asteroid-visualizer",
+  "homepage": "https://Gwarnickn.github.io/Cool_Asteroid_Visualizer/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -7,7 +8,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",
@@ -16,6 +19,7 @@
     "@types/three": "^0.183.1",
     "axios": "^1.14.0",
     "env-cmd": "^11.0.0",
+    "gh-pages": "^6.3.0",
     "react": "^19.2.4",
     "react-datepicker": "^9.1.0",
     "react-dom": "^19.2.4",
