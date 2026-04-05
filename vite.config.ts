@@ -2,14 +2,13 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path';
 import svgrPlugin from 'vite-plugin-svgr';
-//import { analyzer } from 'vite-bundle-analyzer'
 
 export default defineConfig({
   plugins: [
     react(),
     svgrPlugin(),
   ],
-  base: "/cool-asteroid-visualizer",
+  base: "/Cool_Asteroid_Visualizer/",
   server: {
     proxy: {
       '/api/sbdb': {

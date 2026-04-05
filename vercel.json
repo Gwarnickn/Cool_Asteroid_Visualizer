@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/sbdb/:match*",
+      "destination": "https://ssd-api.jpl.nasa.gov/sbdb.api/:match*"
+    },
+    {
+      "source": "/api/horizon/:match*",
+      "destination": "https://ssd.jpl.nasa.gov/api/horizons.api/:match*"
+    }
+  ]
+}
