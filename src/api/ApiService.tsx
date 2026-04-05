@@ -1,4 +1,3 @@
-import type { newDate } from "react-datepicker/dist/dist/date_utils.js";
 import api from "./api";
 
 
