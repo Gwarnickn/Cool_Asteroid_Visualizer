@@ -61,9 +61,9 @@ const Asteroid = ({asteroid}: AsteroidProps) => {
     const [isModalOpen, setModalOpen] = useState(false);
     const badge = (
         <div className="asteroid-badges">
-            {asteroid.average_diameter >= 0.01 && (
+            {asteroid.average_diameter >= 0.05 && (
                 <div className="badge blur-background" style={BadgeColor["red"] as CSSProperties}>
-                    {asteroid.average_diameter >= 2 ? "Mass Extinction" : asteroid.average_diameter >= 1 ? "Continent Killer" : asteroid.average_diameter >= 0.1 ? "Regional Menace" : "City Killer"}
+                    {asteroid.average_diameter >= 2 ? "Mass Extinction" : asteroid.average_diameter >= 1 ? "Continent Killer" : asteroid.average_diameter >= 0.14 ? "Regional Menace" : "City Killer"}
                 </div>
             )}
             {asteroid.hazardous && <div className="badge blur-background" style={BadgeColor["orange"] as CSSProperties}>
